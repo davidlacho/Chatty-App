@@ -6,12 +6,11 @@ class Message extends Component {
   }
 
   render(){
-    console.log(this.props.message);
     return (
       <Fragment>
         {
           this.props.message.type === 'incomingMessage' ?
-          <div className = 'message' >
+          <div className = 'message'>
             <span className = 'message-username' > {this.props.message.username} < /span>
             <span className = 'message-content' > {this.props.message.content}</span>
           </div>
@@ -20,8 +19,6 @@ class Message extends Component {
           {this.props.message.content}
           </div>
         }
-
-
       </Fragment>
     );
   }
