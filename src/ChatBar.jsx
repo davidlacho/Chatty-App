@@ -1,10 +1,12 @@
 import React from 'react';
 
-function ChatBar(){
+function ChatBar(props){
   return (
-    <footer className = "chatbar" >
-      <input className = "chatbar-username" placeholder = "Your Name (Optional)" / >
-      <input className = "chatbar-message" placeholder = "Type a message and hit ENTER" / >
+    <footer>
+      <form className = "chatbar" onKeyPress={props.newMessage} >
+          <input className = "chatbar-username" name='user' placeholder = "Your Name (Optional)" / >
+          <input className = "chatbar-message"  name='content' placeholder = "Type a message and hit ENTER" / >
+      </form>
     </footer>
   );
 }

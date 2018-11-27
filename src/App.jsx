@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+import Data from './SampleData.json'
+
+function makeid() {
+var text = '';
+var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+for (var i = 0; i < 5; i++)
+  text += possible.charAt(Math.floor(Math.random() * possible.length));
+return text;
+}
 
 
 class App extends Component {
@@ -8,49 +17,23 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: 'David'},
-      messages : [
-        {
-          id: 1,
-          type: 'incomingMessage',
-          content: 'I won\'t be impressed with technology until I can download food.',
-          username: 'Anonymous1'
-        },
-        {
-          id: 2,
-          type: 'incomingNotification',
-          content: 'Anonymous1 changed their name to nomnom',
-        },
-        {
-          id: 4,
-          type: 'incomingMessage',
-          content: 'I wouldn\'t want to download Kraft Dinner. I\'d be scared of cheese packet loss.',
-          username: 'Anonymous2'
-        },
-        {
-          id: 5,
-          type: 'incomingMessage',
-          content: '...',
-          username: 'nomnom'
-        },
-        {
-          id: 6,
-          type: 'incomingMessage',
-          content: 'I\'d love to download a fried egg, but I\'m afraid encryption would scramble it',
-          username: 'Anonymous2'
-        },
-        {
-          id: 7,
-          type: 'incomingMessage',
-          content: 'This isn\'t funny. You\'re not funny',
-          username: 'nomnom'
-        },
-        {
-          id: 8,
-          type: 'incomingNotification',
-          content: 'Anonymous2 changed their name to NotFunny',
-        },
-      ]
+      messages : Data.messages
     };
+    this.newMessage = this.newMessage.bind(this);
+  }
+
+  newMessage(event) {
+    if (event.key == 'Enter') {
+      const newMessage ={
+        id: makeid(),
+        type: 'incomingMessage',
+        username: event.currentTarget.user.value || this.state.currentUser.name,
+        content : event.currentTarget.content.value,
+      };
+      const messages = this.state.messages.concat(newMessage);
+      this.setState({messages: messages});
+      event.currentTarget.content.value = '';
+    }
   }
 
   render() {
@@ -59,8 +42,8 @@ class App extends Component {
       <nav className='navbar'>
         <a href='/' className='navbar-brand'>Chatty</a>
       </nav>
-      <MessageList messages={this.state.messages}/>
-      <ChatBar currentUser={this.state.currentUser} messages={this.state.messages}/>
+      <MessageList messages={this.state.messages} />
+      <ChatBar currentUser={this.state.currentUser} messages={this.state.messages} newMessage={this.newMessage}/>
       </div>
     );
   }
