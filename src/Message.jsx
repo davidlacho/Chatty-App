@@ -1,18 +1,30 @@
-import React from 'react';
+import React, {Fragment, Component} from 'react';
 
-function Message(){
+class Message extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <main className = "messages" >
-      <div className = "message" >
-        <span className = "message-username" > Anonymous1 < /span>
-        <span className = "message-content" > I won 't be impressed with technology until I can download food.</span>
-      </div>
-      <div className = "message system" >
-        Anonymous1 changed their name to nomnom.
-      </div>
-    </main>
-  );
+  render(){
+    console.log(this.props.message);
+    return (
+      <Fragment>
+        {
+          this.props.message.type === 'incomingMessage' ?
+          <div className = 'message' >
+            <span className = 'message-username' > {this.props.message.username} < /span>
+            <span className = 'message-content' > {this.props.message.content}</span>
+          </div>
+          :
+          <div className = 'message system' >
+          {this.props.message.content}
+          </div>
+        }
+
+
+      </Fragment>
+    );
+  }
 }
 
 export default Message;
