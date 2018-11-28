@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
-import Data from './SampleData.json'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: 'David'},
-      // messages: Data.messages,
+      currentUser: {name: 'Anonymous'},
       ws : '',
       messages: []
     };
@@ -22,18 +20,18 @@ class App extends Component {
       const oldMessages = this.state.messages;
       this.setState({messages: [... oldMessages, newMessage]});
     }
-    this.setState({ws: ws});
+    this.setState({ws});
   }
 
   newMessage(event) {
     if (event.key == 'Enter') {
       let user = event.currentTarget.user.value;
       if(user && user !== this.state.currentUser.name) {
-        const newMessage ={
+        const newNotification ={
           type: 'incomingNotification',
           content : `${this.state.currentUser.name} changed their name to ${user}`,
         };
-        this.state.ws.send(JSON.stringify(newMessage));
+        this.state.ws.send(JSON.stringify(newNotification));
         this.setState({currentUser: {name : user }});
       } else {
         user = this.state.currentUser.name;
@@ -55,7 +53,7 @@ class App extends Component {
     return (
       <div>
       <nav className='navbar'>
-        <a href='/' className='navbar-brand'>Chatty</a>
+        <a href='/' className='navbar-brand'>ShireTalk</a>
       </nav>
       <MessageList messages={this.state.messages} />
       <ChatBar currentUser={this.state.currentUser} messages={this.state.messages} newMessage={this.newMessage}/>

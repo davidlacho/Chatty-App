@@ -24,7 +24,6 @@ const wss = new WebSockets.Server({ server });
 
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
 
   ws.on('message', function incoming(data) {
     const parsedData = JSON.parse(data);
