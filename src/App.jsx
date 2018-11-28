@@ -12,7 +12,7 @@ class App extends Component {
       currentConnections: 0,
     };
     this.newMessage = this.newMessage.bind(this);
-    this.appWindow = React.createRef();
+    this.endOfMessages = React.createRef();
   }
 
   componentDidMount() {
@@ -28,9 +28,9 @@ class App extends Component {
     this.setState({ws});
   }
 
-componentDidUpdate() {
-  this.appWindow.current.scrollIntoView();
-}
+  componentDidUpdate() {
+    this.endOfMessages.current.scrollIntoView({behavior: 'smooth'});
+  }
 
   newMessage(event) {
     if (event.key == 'Enter') {
@@ -63,10 +63,10 @@ componentDidUpdate() {
       <div>
       <nav className='navbar'>
         <a href='/' className='navbar-brand'>ShireTalk</a>
-        <p className='navbar-users'>{this.state.currentConnections} online</p>
+        <p className='navbar-users'>{this.state.currentConnections} Sneaky Hobbits Online</p>
       </nav>
       <MessageList messages={this.state.messages} />
-      <div ref={this.appWindow}></div>
+      <div ref={this.endOfMessages}></div>
       <ChatBar currentUser={this.state.currentUser} messages={this.state.messages} newMessage={this.newMessage}/>
       </div>
     );
