@@ -26,6 +26,8 @@ const clientColors = {};
 const colors = ['red', 'green', 'blue', 'orange', 'yellow'];
 
 wss.on('connection', (ws) => {
+  console.log('Client connected')
+
   ws.color= colors[Math.floor(Math.random() * colors.length)];
 
   wss.clients.forEach(function each(client) {
@@ -43,13 +45,11 @@ wss.on('connection', (ws) => {
       parsedData['imgURL'] = imgURL[0];
       parsedData.content = parsedData.content.replace(regexImageUrl, '');
     }
-    console.log(parsedData);
 
 
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSockets.OPEN) {
         client.send(JSON.stringify(parsedData));
-        console.log('sent: ', JSON.stringify(parsedData));
       }
     });
 

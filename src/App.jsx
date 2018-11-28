@@ -9,9 +9,10 @@ class App extends Component {
       currentUser: {name: 'Anonymous'},
       ws : '',
       messages: [],
-      currentConnections: 0
+      currentConnections: 0,
     };
     this.newMessage = this.newMessage.bind(this);
+    this.appWindow = React.createRef();
   }
 
   componentDidMount() {
@@ -26,6 +27,10 @@ class App extends Component {
     }
     this.setState({ws});
   }
+
+componentDidUpdate() {
+  this.appWindow.current.scrollIntoView();
+}
 
   newMessage(event) {
     if (event.key == 'Enter') {
@@ -61,6 +66,7 @@ class App extends Component {
         <p className='navbar-users'>{this.state.currentConnections} online</p>
       </nav>
       <MessageList messages={this.state.messages} />
+      <div ref={this.appWindow}></div>
       <ChatBar currentUser={this.state.currentUser} messages={this.state.messages} newMessage={this.newMessage}/>
       </div>
     );

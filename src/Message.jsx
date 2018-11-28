@@ -11,8 +11,11 @@ class Message extends Component {
         {
           this.props.message.type === 'incomingMessage' ?
           <div className = 'message'>
-            <span className = 'message-username' style={{color: this.props.message.userColor}}> {this.props.message.username} < /span>
-            <span className = 'message-content' > {this.props.message.content}</span>
+          <span className = 'message-username' style={{color: this.props.message.userColor}}> {this.props.message.username} < /span>
+            <span className = 'message-content' >
+            {this.props.message.content}
+            {this.props.message.imgURL && <img src={this.props.message.imgURL} style={{maxWidth: '60%', display: 'block'}}/>}
+            </span>
           </div>
           :
           <div className = 'message system' >
