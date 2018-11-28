@@ -37,6 +37,15 @@ wss.on('connection', (ws) => {
     const parsedData = JSON.parse(data);
     parsedData['id'] = uuidv4();
     parsedData['userColor'] = ws.color;
+    const regexImageUrl = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/gi;
+    const imgURL = parsedData.content.match(regexImageUrl);
+    if(imgURL) {
+      parsedData['imgURL'] = imgURL[0];
+      parsedData.content = parsedData.content.replace(regexImageUrl, '');
+    }
+    console.log(parsedData);
+
+
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSockets.OPEN) {
         client.send(JSON.stringify(parsedData));
