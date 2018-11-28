@@ -19,7 +19,10 @@ change into directory `Chatty-App`
 ```
 cd Chatty-App
 ```
-
+Install dependencies using `npm`:
+```
+npm install
+```
 You will need to run two development servers. First, boot up your Websocket server by running:
 ```
 npm run start-ws
