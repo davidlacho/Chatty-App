@@ -11,7 +11,7 @@ class Message extends Component {
         {
           this.props.message.type === 'incomingMessage' ?
           <div className = 'message'>
-            <span className = 'message-username' > {this.props.message.username} < /span>
+            <span className = 'message-username' style={{color: this.props.message.userColor}}> {this.props.message.username} < /span>
             <span className = 'message-content' > {this.props.message.content}</span>
           </div>
           :

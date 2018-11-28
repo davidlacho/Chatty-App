@@ -8,35 +8,50 @@ const PORT = 3001;
 
 // Create a new express server
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
+  // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server
-const wss = new WebSockets.Server({ server });
+const wss = new WebSockets.Server({
+  server
+});
 
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 
-
-
+const clientColors = {};
+const colors = ['red', 'green', 'blue', 'orange', 'yellow'];
 
 wss.on('connection', (ws) => {
+  ws.color= colors[Math.floor(Math.random() * colors.length)];
+
+  wss.clients.forEach(function each(client) {
+    let clientConnections = {connections: wss.clients.size}
+    client.send(JSON.stringify(clientConnections));
+  })
 
   ws.on('message', function incoming(data) {
     const parsedData = JSON.parse(data);
     parsedData['id'] = uuidv4();
+    parsedData['userColor'] = ws.color;
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSockets.OPEN) {
         client.send(JSON.stringify(parsedData));
         console.log('sent: ', JSON.stringify(parsedData));
       }
-});
+    });
 
 
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+    wss.clients.forEach(function each(client) {
+      let clientConnections = {connections: wss.clients.size}
+      client.send(JSON.stringify(clientConnections));
+    })
+  });
 });

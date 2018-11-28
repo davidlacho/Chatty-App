@@ -8,7 +8,8 @@ class App extends Component {
     this.state = {
       currentUser: {name: 'Anonymous'},
       ws : '',
-      messages: []
+      messages: [],
+      currentConnections: 0
     };
     this.newMessage = this.newMessage.bind(this);
   }
@@ -17,8 +18,11 @@ class App extends Component {
     const ws = new WebSocket('ws://localhost:3001');
     ws.onmessage = (e) => {
       const newMessage = JSON.parse(e.data);
-      const oldMessages = this.state.messages;
-      this.setState({messages: [... oldMessages, newMessage]});
+      if (newMessage.connections) {
+        this.setState({currentConnections : newMessage.connections});
+      } else {
+        this.setState({messages: [... this.state.messages, newMessage]});
+      }
     }
     this.setState({ws});
   }
@@ -54,6 +58,7 @@ class App extends Component {
       <div>
       <nav className='navbar'>
         <a href='/' className='navbar-brand'>ShireTalk</a>
+        <p className='navbar-users'>{this.state.currentConnections} online</p>
       </nav>
       <MessageList messages={this.state.messages} />
       <ChatBar currentUser={this.state.currentUser} messages={this.state.messages} newMessage={this.newMessage}/>
