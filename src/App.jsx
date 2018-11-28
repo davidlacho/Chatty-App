@@ -3,36 +3,51 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 import Data from './SampleData.json'
 
-function makeid() {
-var text = '';
-var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-for (var i = 0; i < 5; i++)
-  text += possible.charAt(Math.floor(Math.random() * possible.length));
-return text;
-}
-
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {name: 'David'},
-      messages : Data.messages
+      // messages: Data.messages,
+      ws : '',
+      messages: []
     };
     this.newMessage = this.newMessage.bind(this);
   }
 
+  componentDidMount() {
+    const ws = new WebSocket('ws://localhost:3001');
+    ws.onmessage = (e) => {
+      const newMessage = JSON.parse(e.data);
+      const oldMessages = this.state.messages;
+      this.setState({messages: [... oldMessages, newMessage]});
+    }
+    this.setState({ws: ws});
+  }
+
   newMessage(event) {
     if (event.key == 'Enter') {
-      const newMessage ={
-        id: makeid(),
-        type: 'incomingMessage',
-        username: event.currentTarget.user.value || this.state.currentUser.name,
-        content : event.currentTarget.content.value,
-      };
-      const messages = this.state.messages.concat(newMessage);
-      this.setState({messages: messages});
-      event.currentTarget.content.value = '';
+      let user = event.currentTarget.user.value;
+      if(user && user !== this.state.currentUser.name) {
+        const newMessage ={
+          type: 'incomingNotification',
+          content : `${this.state.currentUser.name} changed their name to ${user}`,
+        };
+        this.state.ws.send(JSON.stringify(newMessage));
+        this.setState({currentUser: {name : user }});
+      } else {
+        user = this.state.currentUser.name;
+      }
+
+      if (event.currentTarget.content.value.length) {
+        const newMessage ={
+          type: 'incomingMessage',
+          username: user,
+          content : event.currentTarget.content.value,
+        };
+        this.state.ws.send(JSON.stringify(newMessage));
+        event.currentTarget.content.value = '';
+      }
     }
   }
 
