@@ -71,7 +71,9 @@ Visit the site [localhost:3000](localhost:3000).
 * webpack-dev-server
 * react
 * react-dom
-
+* ws
+* express
+* uuid
 
 ## Screenshot
 !["Screenshot"](https://github.com/fiveache/Chatty-App/blob/master/docs/screenshot.png?raw=true)
