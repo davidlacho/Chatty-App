@@ -23,12 +23,12 @@ Install dependencies using `npm`:
 ```
 npm install
 ```
-You will need to run two development servers. First, boot up your Websocket server by running:
+You will need to run two servers in different tabs. In the first tab, boot up your Websocket server by running:
 ```
 npm run start-ws
 ```
 
-Second, boot up your Node server by running:
+In the second tab, boot up your Node server by running:
 ```
 npm run start
 ```
@@ -44,6 +44,5 @@ Visit the site [localhost:3000](localhost:3000).
 ## Skills Demonstrated
 
 
-## Screenshots
-!["Mobile Screenshot"](https://github.com/fiveache/tweeter/blob/master/docs/screenshots/mobile1.jpeg?raw=true)
-!["Mobile Screenshot"](https://github.com/fiveache/tweeter/blob/master/docs/screenshots/mobile2.jpeg?raw=true)
+## Screenshot
+!["Screenshot"](https://github.com/fiveache/Chatty-App/blob/master/docs/screenshot.png?raw=true)
