@@ -72,8 +72,6 @@ Visit the site [localhost:3000](localhost:3000).
 * react
 * react-dom
 
-## Skills Demonstrated
-
 
 ## Screenshot
 !["Screenshot"](https://github.com/fiveache/Chatty-App/blob/master/docs/screenshot.png?raw=true)
