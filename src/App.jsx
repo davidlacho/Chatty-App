@@ -31,7 +31,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.endOfMessages.current.scrollIntoView({behavior: 'smooth'});
     if (this.state.currentConnections > prevState.currentConnections) {
       const newNotification ={
         type: 'incomingNotification',
@@ -48,6 +47,7 @@ class App extends Component {
       }
       this.setState({messages: [... this.state.messages, newNotification]});
     }
+    this.endOfMessages.current.scrollIntoView({behavior: 'smooth'});
   }
 
   newMessage(event) {
