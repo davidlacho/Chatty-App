@@ -45,7 +45,6 @@ wss.on('connection', (ws) => {
       parsedData['imgURL'] = imgURL[0];
       parsedData.content = parsedData.content.replace(regexImageUrl, '');
     }
-    console.log(parsedData);
 
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSockets.OPEN) {
