@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+import uuidv4 from 'uuid/v4';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     const ws = new WebSocket('ws://localhost:3001');
+
     ws.onmessage = (e) => {
       const newMessage = JSON.parse(e.data);
       if (newMessage.connections) {
@@ -28,8 +30,24 @@ class App extends Component {
     this.setState({ws});
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     this.endOfMessages.current.scrollIntoView({behavior: 'smooth'});
+    if (this.state.currentConnections > prevState.currentConnections) {
+      const newNotification ={
+        type: 'incomingNotification',
+        content : 'A new user has joined the chat.',
+        id: uuidv4(),
+      }
+      this.setState({messages: [... this.state.messages, newNotification]});
+    }
+    if (this.state.currentConnections < prevState.currentConnections) {
+      const newNotification ={
+        type: 'incomingNotification',
+        content : 'A user has left the chat.',
+        id: uuidv4(),
+      }
+      this.setState({messages: [... this.state.messages, newNotification]});
+    }
   }
 
   newMessage(event) {
