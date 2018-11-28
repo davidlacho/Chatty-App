@@ -1,45 +1,46 @@
-React Boilerplate
-=====================
+# ShireTalk (AKA ChattyApp)
 
-A minimal and light dev environment for ReactJS.
+## Project Description.
 
-### Usage
+ ShireTalk allows hobbits to communicate with each other without having to register accounts. It uses React, a popular front-end library as well as tools for Node including Webpack and Babel.
 
-Clone the boilerplate and create your own git repo.
+## Features
 
+
+## Getting Started
+
+
+### installation
+Clone this repository to your local disk:
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
+git clone https://github.com/fiveache/Chatty-App.git
 ```
-
-Install the dependencies and start the server.
-
+change into directory `Chatty-App`
 ```
-npm install
-npm start
-open http://localhost:3000
+cd Chatty-App
 ```
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
+You will need to run two development servers. First, boot up your Websocket server by running:
 ```
-npm run lint
+npm run start-ws
 ```
 
-### Dependencies
+Second, boot up your Node server by running:
+```
+npm run start
+```
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+Visit the site [localhost:3000](localhost:3000).
+
+## Dependencies
+
+
+### Dev Dependencies
+
+
+## Skills Demonstrated
+
+
+## Screenshots
+!["Mobile Screenshot"](https://github.com/fiveache/tweeter/blob/master/docs/screenshots/mobile1.jpeg?raw=true)
+!["Mobile Screenshot"](https://github.com/fiveache/tweeter/blob/master/docs/screenshots/mobile2.jpeg?raw=true)
