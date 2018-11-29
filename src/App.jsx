@@ -23,30 +23,13 @@ class App extends Component {
       const newMessage = JSON.parse(e.data);
       if (newMessage.connections) {
         this.setState({currentConnections : newMessage.connections});
-      } else {
-        this.setState({messages: [... this.state.messages, newMessage]});
       }
+      this.setState({messages: [... this.state.messages, newMessage]});
     }
     this.setState({ws});
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.currentConnections > prevState.currentConnections) {
-      const newNotification ={
-        type: 'incomingNotification',
-        content : 'A new user has joined the chat.',
-        id: uuidv4(),
-      }
-      this.setState({messages: [... this.state.messages, newNotification]});
-    }
-    if (this.state.currentConnections < prevState.currentConnections) {
-      const newNotification ={
-        type: 'incomingNotification',
-        content : 'A user has left the chat.',
-        id: uuidv4(),
-      }
-      this.setState({messages: [... this.state.messages, newNotification]});
-    }
+  componentDidUpdate() {
     this.endOfMessages.current.scrollIntoView({behavior: 'smooth'});
   }
 
@@ -81,7 +64,7 @@ class App extends Component {
       <div>
       <nav className='navbar'>
         <a href='/' className='navbar-brand'>ShireTalk</a>
-        <p className='navbar-users'>{this.state.currentConnections} Sneaky Hobbits Online</p>
+        <p className='navbar-users'>{this.state.currentConnections} Sneaky Hobbitses Online</p>
       </nav>
       <MessageList messages={this.state.messages} />
       <div ref={this.endOfMessages}></div>
