@@ -31,8 +31,13 @@ wss.on('connection', (ws) => {
   ws.color= colors[Math.floor(Math.random() * colors.length)];
 
   wss.clients.forEach(function each(client) {
-    let clientConnections = {connections: wss.clients.size}
-    client.send(JSON.stringify(clientConnections));
+    const newNotification ={
+      type: 'incomingNotification',
+      content : 'A new user has joined the chat.',
+      id: uuidv4(),
+      connections: wss.clients.size,
+    }
+    client.send(JSON.stringify(newNotification));
   })
 
   ws.on('message', function incoming(data) {
@@ -58,8 +63,13 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected')
     wss.clients.forEach(function each(client) {
-      let clientConnections = {connections: wss.clients.size}
-      client.send(JSON.stringify(clientConnections));
+      const newNotification ={
+        type: 'incomingNotification',
+        content : 'A user has left the chat.',
+        id: uuidv4(),
+        connections: wss.clients.size,
+      }
+      client.send(JSON.stringify(newNotification));
     })
   });
 });
